@@ -33,6 +33,16 @@ to quickly configure third-party authenticators (*e.g. Google Authenticator*)
 const qrcode = await fastify.totp.generateQRCode(secret.ascii)
 ```
 
+## Methods
+
+| Name                                | Description                                                                                  |
+|-------------------------------------|----------------------------------------------------------------------------------------------|
+| `generateSecret (length)`           | Generate a new secret with the provided `length` (or use default one otherwise)              |
+| `generateToken (secret, algorithm, encoding)` | Generate a TOTP token based on given `secret`, `algorithm` and `encoding`.         |
+| `generateAuthURL (secret, label, algorithm)`  | Generate an *auth URL** that can be used to configure a third-party authenticator. |
+| `generateQRCode (secret, label, algorithm)`   | Genereate a data-URI of a *QRCode* to share the *auth URL*.                        |
+| `verify (secret, token, algorithm, encoding, window)`  | Verify a TOTP token with the original secret.                             |
+
 ## Options
 
 | Name               | Description                                                                                  |
