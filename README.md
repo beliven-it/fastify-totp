@@ -2,6 +2,8 @@
 
 A plugin to handle TOTP (e.g. for 2FA)
 
+![Node.js CI](https://github.com/heply/fastify-totp/workflows/Node.js%20CI/badge.svg)
+
 ## Install
 
 ```bash
