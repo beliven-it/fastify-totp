@@ -19,16 +19,16 @@ secret = await fastify.totp.generateSecret()
 
 // You should now store secret.ascii in order to verify the TOTP.
 
-const totp = req.body.token
+const token = req.body.token
 
-isVerified = await fastify.totp.verify(secret.ascii, totp) 
+isVerified = await fastify.totp.verify(secret.ascii, token) 
 ```
 
 The plugin includes also a facility to generate a **QRCode** that can be used
-to easly configure third-party authenticators (*e.g. Google Authenticator*)
+to quickly configure third-party authenticators (*e.g. Google Authenticator*)
 
 ```js
-qrcode = await fastify.totp.generateQRCode(secret.ascii)
+const qrcode = await fastify.totp.generateQRCode(secret.ascii)
 ```
 
 ## Options
