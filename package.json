@@ -1,0 +1,43 @@
+{
+  "name": "fastify-totp",
+  "version": "0.0.1",
+  "description": "A plugin to handle TOTP (e.g. for 2FA)",
+  "main": "totp.js",
+  "scripts": {
+    "test": "npx tap -Rspec --coverage test/**/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heply/fastify-totp.git"
+  },
+  "keywords": [
+    "fastify",
+    "plugin",
+    "totp",
+    "2fa",
+    "speakeasy",
+    "auth"
+  ],
+  "author": "Heply s.r.l.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/heply/fastify-totp/issues"
+  },
+  "homepage": "https://github.com/heply/fastify-totp#readme",
+  "devDependencies": {
+    "eslint": "^7.7.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "fastify": "^3.2.1",
+    "fastify-sensible": "^3.0.1",
+    "tap": "^14.10.8"
+  },
+  "dependencies": {
+    "fastify-plugin": "^2.3.2",
+    "qrcode": "^1.4.4",
+    "speakeasy": "^2.0.0"
+  }
+}
