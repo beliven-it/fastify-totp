@@ -15,7 +15,7 @@ module.exports = fp(function (fastify, opts, next) {
   const TOTP_WINDOW = opts.totpWindow || DEFAULT_TOTP_WINDOW
   const TOTP_ALG = opts.totpAlg || DEFAULT_TOTP_ALG
 
-  const generateTOTPSecret = async length => {
+  function generateTOTPSecret (length) {
     const secret = speakeasy.generateSecret({
       length: length || TOTP_SECRET_LENGHT
     })
@@ -24,7 +24,7 @@ module.exports = fp(function (fastify, opts, next) {
     return secret
   }
 
-  const generateTOTPToken = async (secret, algorithm, encoding) => {
+  function generateTOTPToken (secret, algorithm, encoding) {
     if (!secret) return null
 
     const token = speakeasy.totp({
@@ -36,7 +36,7 @@ module.exports = fp(function (fastify, opts, next) {
     return token
   }
 
-  const generateAuthURLFromSecret = async (secret, label, algorithm) => {
+  function generateAuthURLFromSecret (secret, label, algorithm) {
     if (!secret) return null
 
     const url = speakeasy.otpauthURL({
@@ -48,15 +48,15 @@ module.exports = fp(function (fastify, opts, next) {
     return url
   }
 
-  const generateQRCodeFromSecret = async (secret, label, algorithm) => {
-    const url = await fastify.totp.generateAuthURL(secret, label, algorithm)
+  async function generateQRCodeFromSecret (secret, label, algorithm) {
+    const url = fastify.totp.generateAuthURL(secret, label, algorithm)
 
     if (!url) return null
 
     return qrcode.toDataURL(url)
   }
 
-  const verifyTOTP = async (secret, token, algorithm, encoding, window) => {
+  function verifyTOTP (secret, token, algorithm, encoding, window) {
     const result = speakeasy.totp.verifyDelta({
       secret: secret,
       token: token,
