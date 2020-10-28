@@ -1,0 +1,7 @@
+# Changelog
+
+## [0.1.0] - 2020-10-28
+- refactor: use sync methods where possible
+
+## [0.0.1] - 2020-09-11
+- Initial release
