@@ -75,5 +75,7 @@ module.exports = fp(function (fastify, opts, next) {
     verify: verifyTOTP
   })
 
+  fastify.decorateRequest('totpVerify', verifyTOTP)
+
   next()
 })

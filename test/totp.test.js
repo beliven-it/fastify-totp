@@ -10,10 +10,7 @@ const buildApp = function (t) {
 
   t.tearDown(() => fastify.close())
 
-  return fastify
-    .register(require('../totp'), { secretLength: SECRET_LENGHT })
-    .ready()
-    .then(() => fastify)
+  return fastify.register(require('../totp'), { secretLength: SECRET_LENGHT })
 }
 
 test('totp.generateSecret', async t => {
@@ -129,8 +126,31 @@ test('totp.verify', async t => {
   t.test('passing a valid token for a secret', async t => {
     t.plan(1)
     const secret = 'HGOp]VSO[bV:T6?vgNe&'
-    const token = fastify.totp.generateToken(secret, 'sha512')
-    const result = fastify.totp.verify(secret, token, 'sha512')
+    const alg = 'sha512'
+    const token = fastify.totp.generateToken(secret, alg)
+    const result = fastify.totp.verify(secret, token, alg)
     t.equal(result, true, 'should return true')
+  })
+})
+
+test('request.totpVerify', async t => {
+  const fastify = await buildApp(t)
+
+  t.test('verifying a valid token for a secret', async t => {
+    t.plan(1)
+    const secret = 'HGOp]VSO[bV:T6?vgNe&'
+    function handler (req, reply) {
+      const alg = 'sha512'
+      const token = fastify.totp.generateToken(secret, alg)
+      const doesMatch = req.totpVerify(secret, token, alg)
+      return reply.send(doesMatch ? 'ok' : 'ko')
+    }
+    fastify.route({
+      method: 'GET',
+      url: '/',
+      handler
+    })
+    const result = await fastify.inject('/')
+    t.equal(result.payload, 'ok', 'should return a positive response')
   })
 })
