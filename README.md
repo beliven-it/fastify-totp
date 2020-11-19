@@ -23,7 +23,7 @@ secret = fastify.totp.generateSecret()
 
 const token = req.body.token
 
-isVerified = fastify.totp.verify(secret.ascii, token) 
+isVerified = fastify.totp.verify(secret.ascii, token)
 ```
 
 The plugin includes also a facility to generate a **QRCode** that can be used
@@ -42,6 +42,12 @@ const qrcode = await fastify.totp.generateQRCode(secret.ascii)
 | `generateAuthURL (secret, label, algorithm)`  | Generate an *auth URL** that can be used to configure a third-party authenticator. |
 | `generateQRCode (secret, label, algorithm) [async]`    | Genereate a data-URI of a *QRCode* to share the *auth URL*.               |
 | `verify (secret, token, algorithm, encoding, window)`  | Verify a TOTP token with the original secret.                             |
+
+## Request
+
+| Name                                                               | Description                                                   |
+|--------------------------------------------------------------------|---------------------------------------------------------------|
+| `request.totpVerify (secret, token, algorithm, encoding, window)`  | See `verify`.                                                 |
 
 ## Options
 
