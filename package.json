@@ -1,6 +1,6 @@
 {
   "name": "fastify-totp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A plugin to handle TOTP (e.g. for 2FA)",
   "main": "totp.js",
   "scripts": {
