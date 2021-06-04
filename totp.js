@@ -8,12 +8,14 @@ const DEFAULT_TOTP_SECRET_LENGTH = 20
 const DEFAULT_TOTP_LABEL = 'Fastify'
 const DEFAULT_TOTP_WINDOW = 1
 const DEFAULT_TOTP_ALG = 'sha512'
+const DEFAULT_TOTP_STEP = 30
 
 module.exports = fp(function (fastify, opts, next) {
   const TOTP_SECRET_LENGHT = opts.secretLength || DEFAULT_TOTP_SECRET_LENGTH
   const TOTP_LABEL = opts.totpLabel || DEFAULT_TOTP_LABEL
   const TOTP_WINDOW = opts.totpWindow || DEFAULT_TOTP_WINDOW
   const TOTP_ALG = opts.totpAlg || DEFAULT_TOTP_ALG
+  const TOTP_STEP = opts.totpStep || DEFAULT_TOTP_STEP
 
   function generateTOTPSecret (length) {
     const secret = speakeasy.generateSecret({
@@ -30,6 +32,7 @@ module.exports = fp(function (fastify, opts, next) {
     const token = speakeasy.totp({
       encoding: options.encoding || 'ascii',
       algorithm: options.algorithm || TOTP_ALG,
+      step: options.step || TOTP_STEP,
       ...options
     })
 
@@ -60,6 +63,7 @@ module.exports = fp(function (fastify, opts, next) {
     const result = speakeasy.totp.verifyDelta({
       encoding: options.encoding || 'ascii',
       window: options.window || TOTP_WINDOW,
+      step: options.step || TOTP_STEP,
       ...options
     })
     return !!result
