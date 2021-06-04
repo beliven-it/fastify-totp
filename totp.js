@@ -24,25 +24,25 @@ module.exports = fp(function (fastify, opts, next) {
     return secret
   }
 
-  function generateTOTPToken (secret, algorithm, encoding) {
-    if (!secret) return null
+  function generateTOTPToken (options = {}) {
+    if (!options.secret) return null
 
     const token = speakeasy.totp({
-      secret,
-      encoding: encoding || 'ascii',
-      algorithm: algorithm || TOTP_ALG
+      encoding: options.encoding || 'ascii',
+      algorithm: options.algorithm || TOTP_ALG,
+      ...options
     })
 
     return token
   }
 
-  function generateAuthURLFromSecret (secret, label, algorithm) {
-    if (!secret) return null
+  function generateAuthURLFromSecret (options = {}) {
+    if (!options.secret) return null
 
     const url = speakeasy.otpauthURL({
-      secret,
-      label: label || TOTP_LABEL,
-      algorithm: algorithm || TOTP_ALG
+      label: options.label || TOTP_LABEL,
+      algorithm: options.algorithm || TOTP_ALG,
+      ...options
     })
 
     return url
@@ -56,13 +56,11 @@ module.exports = fp(function (fastify, opts, next) {
     return qrcode.toDataURL(url)
   }
 
-  function verifyTOTP (secret, token, algorithm, encoding, window) {
+  function verifyTOTP (options = {}) {
     const result = speakeasy.totp.verifyDelta({
-      secret: secret,
-      token: token,
-      encoding: encoding || 'ascii',
-      window: window || TOTP_WINDOW,
-      algorithm
+      encoding: options.encoding || 'ascii',
+      window: options.window || TOTP_WINDOW,
+      ...options
     })
     return !!result
   }
