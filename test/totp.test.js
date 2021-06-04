@@ -8,7 +8,7 @@ const SECRET_LENGHT = 30
 const buildApp = function (t) {
   const fastify = Fastify({ logger: { level: 'error' } })
 
-  t.tearDown(() => fastify.close())
+  t.teardown(() => fastify.close())
 
   return fastify.register(require('../totp'), { secretLength: SECRET_LENGHT })
 }
@@ -52,7 +52,7 @@ test('totp.generateToken', async t => {
   t.test('with a secret', async t => {
     t.plan(1)
     const result = fastify.totp.generateToken({ secret: 'abcdefg' })
-    t.true(result && result.length > 0, 'should return a valid token')
+    t.ok(result && result.length > 0, 'should return a valid token')
   })
 })
 
