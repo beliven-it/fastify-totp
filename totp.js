@@ -81,6 +81,6 @@ module.exports = fp(function (fastify, opts, next) {
 
   next()
 }, {
-  fastify: '3.x',
+  fastify: '>=2.x',
   name: 'fastify-totp'
 })
