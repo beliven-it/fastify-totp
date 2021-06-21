@@ -23,14 +23,14 @@ secret = fastify.totp.generateSecret()
 
 const token = req.body.token
 
-isVerified = fastify.totp.verify(secret.ascii, token)
+isVerified = fastify.totp.verify({ secret: secret.ascii, token })
 ```
 
 The plugin includes also a facility to generate a **QRCode** that can be used
 to quickly configure third-party authenticators (*e.g. Google Authenticator*)
 
 ```js
-const qrcode = await fastify.totp.generateQRCode(secret.ascii)
+const qrcode = await fastify.totp.generateQRCode({ secret: secret.ascii })
 ```
 
 ## Methods
@@ -38,16 +38,16 @@ const qrcode = await fastify.totp.generateQRCode(secret.ascii)
 | Name                                | Description                                                                                  |
 |-------------------------------------|----------------------------------------------------------------------------------------------|
 | `generateSecret (length)`           | Generate a new secret with the provided `length` (or use default one otherwise)              |
-| `generateToken (secret, algorithm, encoding)` | Generate a TOTP token based on given `secret`, `algorithm` and `encoding`.         |
-| `generateAuthURL (secret, label, algorithm)`  | Generate an *auth URL** that can be used to configure a third-party authenticator. |
-| `generateQRCode (secret, label, algorithm) [async]`    | Genereate a data-URI of a *QRCode* to share the *auth URL*.               |
-| `verify (secret, token, algorithm, encoding, window)`  | Verify a TOTP token with the original secret.                             |
+| `generateToken (options)` | Generate a TOTP token based on given `options`.        |
+| `generateAuthURL (options)`  | Generate an *auth URL** that can be used to configure a third-party authenticator. |
+| `generateQRCode (options) [async]`    | Genereate a data-URI of a *QRCode* to share the *auth URL*.               |
+| `verify (options)`  | Verify a TOTP token with the original secret.                             |
 
 ## Request
 
 | Name                                                               | Description                                                   |
 |--------------------------------------------------------------------|---------------------------------------------------------------|
-| `request.totpVerify (secret, token, algorithm, encoding, window)`  | See `verify`.                                                 |
+| `request.totpVerify (options)`  | See `verify`.                                                 |
 
 ## Options
 
@@ -57,6 +57,7 @@ const qrcode = await fastify.totp.generateQRCode(secret.ascii)
 | `totpLabel`        |  The label to show in third-party authenticators. Usually the app name. *Default: "Fastify"* |
 | `totpWindow`       |  The allowable previous or future "time-windows" to check against of. *Default: 1*           |
 | `totpAlg`          |  The algorithm to use for hash generation. *Default: "sha512"*                               |
+| `totpStep`         |  Time step in seconds. *Default: 30*                               |
 
 **NOTE:** for more details, please take a look at [Speakeasy docs](https://www.npmjs.com/package/speakeasy#documentation).
 

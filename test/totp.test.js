@@ -8,7 +8,7 @@ const SECRET_LENGHT = 30
 const buildApp = function (t) {
   const fastify = Fastify({ logger: { level: 'error' } })
 
-  t.tearDown(() => fastify.close())
+  t.teardown(() => fastify.close())
 
   return fastify.register(require('../totp'), { secretLength: SECRET_LENGHT })
 }
@@ -51,8 +51,8 @@ test('totp.generateToken', async t => {
 
   t.test('with a secret', async t => {
     t.plan(1)
-    const result = fastify.totp.generateToken('abcdefg')
-    t.true(result && result.length > 0, 'should return a valid token')
+    const result = fastify.totp.generateToken({ secret: 'abcdefg' })
+    t.ok(result && result.length > 0, 'should return a valid token')
   })
 })
 
@@ -72,7 +72,7 @@ test('totp.generateAuthURL', async t => {
 
   t.test('with a secret', async t => {
     t.plan(1)
-    const result = fastify.totp.generateAuthURL('abcdefg')
+    const result = fastify.totp.generateAuthURL({ secret: 'abcdefg' })
     const isURL = (result.indexOf('otpauth://totp') === 0)
     t.equal(isURL, true, 'should return an auth URL')
   })
@@ -80,7 +80,7 @@ test('totp.generateAuthURL', async t => {
   t.test('with a secret and a label', async t => {
     t.plan(1)
     const label = 'test-url'
-    const result = fastify.totp.generateAuthURL('abcdefg', label)
+    const result = fastify.totp.generateAuthURL({ secret: 'abcdefg', label })
     const isURL = (result.indexOf(`otpauth://totp/${label}`) === 0)
     t.equal(isURL, true, 'should return an auth URL with given label')
   })
@@ -102,14 +102,14 @@ test('totp.generateQRCode', async t => {
 
   t.test('with a secret', async t => {
     t.plan(1)
-    const result = await fastify.totp.generateQRCode('abcdefg')
+    const result = await fastify.totp.generateQRCode({ secret: 'abcdefg' })
     const isQRCode = (result.indexOf('data:image/png;base64') === 0)
     t.equal(isQRCode, true, 'should return a data URL with QRCode')
   })
 
   t.test('with a secret and a label', async t => {
     t.plan(1)
-    const result = await fastify.totp.generateQRCode('abcdefg', 'test-qrcode')
+    const result = await fastify.totp.generateQRCode({ secret: 'abcdefg', label: 'test-qrcode' })
     const isQRCode = (result.indexOf('data:image/png;base64') === 0)
     t.equal(isQRCode, true, 'should return a data URL with QRCode')
   })
@@ -126,9 +126,9 @@ test('totp.verify', async t => {
   t.test('passing a valid token for a secret', async t => {
     t.plan(1)
     const secret = 'HGOp]VSO[bV:T6?vgNe&'
-    const alg = 'sha512'
-    const token = fastify.totp.generateToken(secret, alg)
-    const result = fastify.totp.verify(secret, token, alg)
+    const algorithm = 'sha512'
+    const token = fastify.totp.generateToken({ secret, algorithm })
+    const result = fastify.totp.verify({ secret, token, algorithm })
     t.equal(result, true, 'should return true')
   })
 })
@@ -140,9 +140,9 @@ test('request.totpVerify', async t => {
     t.plan(1)
     const secret = 'HGOp]VSO[bV:T6?vgNe&'
     function handler (req, reply) {
-      const alg = 'sha512'
-      const token = fastify.totp.generateToken(secret, alg)
-      const doesMatch = req.totpVerify(secret, token, alg)
+      const algorithm = 'sha512'
+      const token = fastify.totp.generateToken({ secret, algorithm })
+      const doesMatch = req.totpVerify({ secret, token, algorithm })
       return reply.send(doesMatch ? 'ok' : 'ko')
     }
     fastify.route({
