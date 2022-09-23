@@ -71,7 +71,7 @@ npm test
 
 This project is kindly sponsored by:
 
-[![heply](https://raw.githack.com/heply/brand/master/heply-logo.svg)](https://www.heply.it)
+[![Beliven](https://assets.beliven.com/brand/logo_pos_color.svg)](https://www.beliven.com)
 
 ## License
 
