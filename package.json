@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/heply/fastify-totp.git"
+    "url": "git+https://github.com/beliven-it/fastify-totp.git"
   },
   "keywords": [
     "fastify",
@@ -18,12 +18,12 @@
     "speakeasy",
     "auth"
   ],
-  "author": "Heply s.r.l.",
+  "author": "Beliven",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/heply/fastify-totp/issues"
+    "url": "https://github.com/beliven-it/fastify-totp/issues"
   },
-  "homepage": "https://github.com/heply/fastify-totp#readme",
+  "homepage": "https://github.com/beliven-it/fastify-totp#readme",
   "devDependencies": {
     "eslint": "^7.27.0",
     "eslint-config-standard": "^16.0.3",
