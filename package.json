@@ -38,7 +38,7 @@
   "dependencies": {
     "fastify-plugin": "^3.0.0",
     "qrcode": "^1.4.4",
-    "speakeasy": "^2.0.0"
+    "@levminer/speakeasy": "^1.4.2"
   },
   "tap": {
     "check-coverage": false
