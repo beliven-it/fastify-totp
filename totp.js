@@ -1,7 +1,7 @@
 'use strict'
 
 const fp = require('fastify-plugin')
-const speakeasy = require('speakeasy')
+const speakeasy = require('@levminer/speakeasy')
 const qrcode = require('qrcode')
 
 const DEFAULT_TOTP_SECRET_LENGTH = 20
