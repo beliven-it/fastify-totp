@@ -31,7 +31,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-standard": "^5.0.0",
-    "fastify": "^3.17.0",
+    "fastify": "^5.2.1",
     "fastify-sensible": "^3.1.1",
     "tap": "^16.0.0"
   },
