@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A plugin to handle TOTP (e.g. for 2FA)",
   "main": "totp.js",
+  "types": "totp.d.ts",
   "scripts": {
     "test": "npx tap -Rspec --coverage test/**/*.test.js"
   },
